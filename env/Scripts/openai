@@ -1,4 +1,4 @@
-#!C:\Users\10734341\Desktop\whatsapp-chatbot\env\Scripts\python.exe
+#!C:\Users\sfrge\whatsapp-chatbot\env\Scripts\python.exe
 import argparse
 import logging
 import sys
