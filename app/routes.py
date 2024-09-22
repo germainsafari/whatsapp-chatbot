@@ -1,9 +1,21 @@
-from flask import request, jsonify
-from app import app
+from flask import Blueprint, request, jsonify
 from app.gpt import ask_gpt
+from app.data_handler import handle_custom_data
 
-@app.route("/whatsapp", methods=["POST"])
-def whatsapp_bot():
+whatsapp_webhook = Blueprint('whatsapp_webhook', __name__)
+
+@whatsapp_webhook.route("/whatsapp", methods=["POST"])
+def whatsapp():
     incoming_msg = request.values.get('Body', '').lower()
-    response_text = ask_gpt(incoming_msg)
-    return jsonify({"response": response_text})
+
+
+    custom_answer = handle_custom_data(incoming_msg)
+
+    if custom_answer:
+        response_text = custom_answer
+    else:
+       
+        response_text = ask_gpt(incoming_msg)
+
+    
+    return jsonify({"message": response_text})
